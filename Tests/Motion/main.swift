@@ -1,7 +1,7 @@
 import Foundation
 
 func freshDefaults() -> UserDefaults {
-    let suite = "HeadOrbit.tests.\(UUID().uuidString)"
+    let suite = "NotLooking.tests.\(UUID().uuidString)"
     let d = UserDefaults(suiteName: suite)!
     d.removePersistentDomain(forName: suite)
     return d
@@ -13,6 +13,44 @@ assert(fresh.scenes.map(\.id) == ["privacy", "posture", "voice"])
 assert(fresh.scenes.filter(\.isEnabled).map(\.id) == ["privacy"])
 assert(fresh.scene("privacy")!.gestures == [.turnLeft, .turnRight])
 assert(!fresh.autoCalibration)
+
+// Adjustable blur preserves old scenes and every other action's serialized shape.
+let oldBlur = Data(#"{"blur":{"dim":0.25}}"#.utf8)
+let oldBlurDecoded = try JSONDecoder().decode(Behavior.self, from: oldBlur)
+assert(oldBlurDecoded == .blur(dim: 0.25, radius: 64))
+let roundtripActions: [Behavior] = [.blur(dim: 0.3, radius: 0), .blur(dim: 0.15, radius: 128), .posture, .tapKey(.space), .holdKey(.fn)]
+for action in roundtripActions {
+    let data = try JSONEncoder().encode(action)
+    let decoded = try JSONDecoder().decode(Behavior.self, from: data)
+    assert(decoded == action)
+}
+let oversizedBlur = Data(#"{"blur":{"dim":0.15,"radius":9999}}"#.utf8)
+let oversizedDecoded = try JSONDecoder().decode(Behavior.self, from: oversizedBlur)
+assert(oversizedDecoded == .blur(dim: 0.15, radius: 128))
+let strengthDefaults = freshDefaults()
+let strengthStore = SceneStore(defaults: strengthDefaults)
+strengthStore.update("privacy") { scene in
+    scene.bindings[0].behavior = .blur(dim: 0.2, radius: 120)
+}
+let savedStrength = SceneStore(defaults: strengthDefaults).scene("privacy")!
+assert(savedStrength.bindings[0].behavior == .blur(dim: 0.2, radius: 120))
+assert(savedStrength.bindings[1].behavior == .blur(dim: 0.15, radius: 64), "Directions keep independent blur settings")
+
+// Setup cannot pass from a neutral pose or from an overlay clearing on disconnect.
+var setupTest = SetupVerification()
+setupTest.update(isTracking: true, isProtected: false)
+assert(setupTest.phase == .waitingForTurn)
+setupTest.update(isTracking: true, isProtected: true)
+assert(setupTest.phase == .waitingForReturn)
+setupTest.update(isTracking: false, isProtected: false)
+assert(setupTest.phase == .waitingForTurn, "Disconnect must not count as looking back")
+setupTest.update(isTracking: true, isProtected: false)
+assert(setupTest.phase == .waitingForTurn)
+setupTest.update(isTracking: true, isProtected: true)
+setupTest.update(isTracking: true, isProtected: false)
+assert(setupTest.phase == .passed)
+setupTest.reset()
+assert(setupTest.phase == .waitingForTurn, "Recalibration must require a fresh turn test")
 
 // Upgrade from v0.1.x keeps the old behaviour.
 let legacy = freshDefaults()

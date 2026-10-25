@@ -1,6 +1,6 @@
-name: HeadOrbit
+name: NotLooking
 options:
-  bundleIdPrefix: com.cogria
+  bundleIdPrefix: io.github.tuotuogao
   deploymentTarget:
     macOS: "14.0"
   createIntermediateGroups: true
@@ -16,26 +16,26 @@ settings:
     ENABLE_APP_SANDBOX: NO
     SWIFT_STRICT_CONCURRENCY: minimal
 targets:
-  HeadOrbit:
+  NotLooking:
     type: application
     platform: macOS
     sources:
-      - path: HeadOrbit
+      - path: NotLooking
         excludes: ["Info.plist"]
     info:
-      path: HeadOrbit/Info.plist
+      path: NotLooking/Info.plist
       properties:
-        CFBundleName: HeadOrbit
-        CFBundleDisplayName: HeadOrbit
-        CFBundleShortVersionString: "2.1.0"
-        CFBundleVersion: "9"
+        CFBundleName: NotLooking
+        CFBundleDisplayName: 没在看
+        CFBundleShortVersionString: "1.0.0"
+        CFBundleVersion: "1"
         LSMinimumSystemVersion: "14.0"
         CFBundleIconFile: AppIcon
         LSUIElement: true
-        NSMotionUsageDescription: HeadOrbit reads head motion from your AirPods to tell whether you are looking at the screen.
+        NSMotionUsageDescription: NotLooking reads head motion from your AirPods to tell whether you are looking at the screen.
         CFBundleDevelopmentRegion: en
         CFBundleLocalizations: [en, zh-Hans, ja]
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.cogria.HeadOrbit
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.tuotuogao.NotLooking
         GENERATE_INFOPLIST_FILE: NO

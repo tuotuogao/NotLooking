@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
-test_binary=$(mktemp /tmp/headorbit-motion.XXXXXX)
+test_binary=$(mktemp /tmp/notlooking-motion.XXXXXX)
 trap 'rm -f "$test_binary"' EXIT
-swiftc HeadOrbit/Motion/*.swift HeadOrbit/Actions/*.swift HeadOrbit/Overlay/*.swift HeadOrbit/Exercise/NeckExercise.swift HeadOrbit/UI/L10n.swift Tests/Motion/main.swift -o "$test_binary"
+swiftc NotLooking/Motion/*.swift NotLooking/Actions/*.swift NotLooking/Overlay/*.swift NotLooking/Exercise/NeckExercise.swift NotLooking/UI/L10n.swift Tests/Motion/main.swift -o "$test_binary"
 "$test_binary"

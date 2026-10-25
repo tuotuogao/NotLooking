@@ -27,5 +27,5 @@ jobs:
             gh release upload "$GITHUB_REF_NAME" dist/*.dmg --clobber
           else
             gh release create "$GITHUB_REF_NAME" dist/*.dmg \
-              --title "HeadOrbit $GITHUB_REF_NAME" --generate-notes
+              --title "NotLooking $GITHUB_REF_NAME" --generate-notes
           fi

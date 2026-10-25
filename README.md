@@ -1,151 +1,78 @@
-<p align="center">
-  <img src="docs/banner.png" alt="HeadOrbit" width="100%">
-</p>
+# 没在看 · NotLooking
 
-<p align="center">
-  <b>English</b> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.ja.md">日本語</a> · <a href="https://headorbit.com">headorbit.com</a>
-</p>
+<img src="docs/icon.png" width="112" alt="没在看：紫色背景上的眼睛斜杠图标" />
 
-<p align="center">
-  <img src="docs/icon.png" alt="" width="128">
-</p>
+**你没在看，屏幕就懂了。**
 
-# HeadOrbit
+戴着支持头部追踪的 AirPods，转头离开屏幕时自动模糊，转回即恢复。一个原生 macOS 菜单栏小工具，无需摄像头。
 
-**Control your Mac with your head. No camera needed.**
+[English](README.en.md) · [下载](https://github.com/tuotuogao/NotLooking/releases) · [原项目 HeadOrbit](https://github.com/Cogria-AI/HeadOrbit)
 
-HeadOrbit is a small macOS menu bar app. It reads the motion sensors already inside your AirPods and turns head movements into actions on your Mac.
+## 这个版本改了什么
 
-Turn away to talk to someone and the screen blurs. Tilt your head left and your voice input starts listening; straighten up and it stops. Tilt right and it presses Return. Your hands stay on the keyboard, or off it.
+- **四步首次引导**：运动权限 → 连接耳机 → 3 秒倒数校准 → 实际转头测试。每一步都会检查状态，耳机断开不会误判为测试成功。
+- **容易找到入口**：菜单栏显示眼睛斜杠和简短文字；再次打开应用可直接显示设置窗口。设置窗口打开时会显示 Dock 图标，关闭后继续在菜单栏运行。
+- **应用内开机启动**：在引导完成页或“通用”中设置登录后自动启动；系统需要额外批准时会提供入口。
+- **手动模糊强度**：左右方向分别调节 0–100% 的模糊强度，与压暗程度独立设置，支持两秒预览并自动保存。0% 为仅压暗，默认强度为 50%。
+- **独立身份与更新地址**：应用名 NotLooking（中文“没在看”），标识 `io.github.tuotuogao.NotLooking`，从本仓库检查更新。
+- 保留原项目的场景设置、坐姿提醒、头部按键动作、颈部活动及中英日语言切换。
 
-> **Status: an experiment, made for fun.**
-> Inspired by [this post by @bryllim_](https://x.com/bryllim_/status/2099049704822907277). This is a weekend-project-grade tool, not a product. Expect rough edges.
+## 使用
 
-## What's new in 2.1
+需要 macOS 14 或更新版本，以及支持头部追踪的 AirPods / Beats，例如 AirPods Pro、AirPods 3 / 4、AirPods Max。耳机必须连接到这台 Mac，而不是切到手机。
 
-- **Neck exercise.** Click **Neck exercise** in the menu bar panel. The screen blurs and shows a path to follow with your head: a clockwise neck roll, a counterclockwise one, then a figure 8, 3 times each. The dot is your head, and it waits if you fall behind. Press `Esc` to stop at any time.
-- **Automatic updates.** HeadOrbit checks GitHub for a new version once at launch, downloads it, and asks before restarting. You can also check by hand in Settings → About. Coming from 2.0, you still need to download this one manually.
+1. 从 [Releases](https://github.com/tuotuogao/NotLooking/releases) 下载 DMG，把 NotLooking 拖入“应用程序”。
+2. 打开“没在看”，按照窗口中的四步引导操作。
+3. 运动权限通过后，戴好耳机并等待“正在追踪”。
+4. 平视屏幕，完成 3 秒校准；开始测试，转头，再转回。
+5. 测试通过后点击“开始使用”，可选开启“登录 Mac 时自动启动”。
 
-## What's new in 2.0
+默认向左或向右转头超过 **35°，持续 0.6 秒**触发模糊。触发角度、等待时间和压暗程度可在“隐私模糊”中分别调整。
 
-- **Gestures and actions are separate.** HeadOrbit reads three head movements: turn, nod and tilt. Each has two directions, and each direction can do one thing: blur the screen, show a posture reminder, press a key, hold a key, or nothing.
-- **Scenes.** A scene is a set of those choices that you switch on or off as a unit. Three come built in, and you can make your own.
-- **Tilt is new.** Earlier versions only used turn and nod.
-- **Key actions.** "Press a key" fires once per gesture. "Hold a key" keeps the key down while you hold the gesture and releases it when you return to forward, which is what push-to-talk voice input needs.
-- **Settings window.** The menu bar panel now only shows status and live angles. Everything else lives in a separate window.
+如果图标被菜单栏挤掉，再次从“应用程序”打开“没在看”即可进入设置。“开始使用”引导也可以随时重新运行。
 
-Settings from 0.1.x carry over automatically.
+重新启动应用后，需要平视屏幕重新校准一次；校准前不会用不可靠的绝对角度触发动作。手动启动会直接打开校准页，登录启动时则在菜单栏提示。
 
-## Built-in scenes
+此版本采用本地临时签名，尚未经过 Apple 公证。首次打开若被 macOS 阻止，请核对下载来源后，在系统设置“隐私与安全”中选择允许打开。
 
-| Scene | Gestures | Default |
-|---|---|---|
-| Privacy blur | Turn left or right past 35° for 0.6 s: blur the screen | On |
-| Posture reminder | Head tilts up past +15° for 5 s (you slouched): blur with a reminder, `Esc` pauses it for a minute | Off |
-| Voice input | Tilt left past 15°: hold `Fn`. Tilt right past 15°: press `Return` | Off |
+## 权限与数据
 
-Voice input is meant for input methods that start dictation while `Fn` is held down. We tested it with Doubao IME. Tilt left, speak, straighten up, tilt right to send.
+- **运动与健身**：用于读取耳机头部动作，是转头模糊唯一必需的隐私权限。
+- **辅助功能**：仅头部动作模拟按键时需要；首次引导不会要求开启。
+- 模糊不需要摄像头、麦克风或录屏权限。
+- 动作数据在本机处理；常规运行不上传动作数据。更新检查会访问本仓库的 GitHub Releases。
+- 转头模糊是避免意外暴露的辅助功能，不代替系统锁屏。系统私有模糊接口不可用时，会降级为压暗。
 
-You can change any angle, delay or key, duplicate a built-in scene, or start an empty one. A direction can belong to only one enabled scene at a time; if two scenes want the same direction, HeadOrbit tells you which one is using it.
+## 从源码构建
 
-<p align="center">
-  <img src="docs/settings.png" alt="HeadOrbit settings window" width="640">
-</p>
+需要 Xcode 15 或更新版本和 [XcodeGen](https://github.com/yonaskolb/XcodeGen)。
 
-Nothing leaves your Mac. No screen recording, no accounts. The only network request is the update check against GitHub Releases, and nothing is uploaded.
-
-## Requirements
-
-- macOS 14 Sonoma or later
-- AirPods or Beats that support head tracking, for example AirPods Pro (any generation), AirPods 3 / 4, AirPods Max, Beats Fit Pro, Powerbeats Pro 2
-- The earbuds must be connected to **this Mac**. If they auto-switch to your iPhone, the Mac stops receiving motion data.
-- Works with one earbud or both.
-
-## Install
-
-### Option 1: download the app
-
-Grab the latest `HeadOrbit-vX.Y.Z.dmg` from the [Releases](https://github.com/Cogria-AI/HeadOrbit/releases) page, open it, and drag `HeadOrbit` into the Applications folder.
-
-The app is not notarized with Apple, so on first open macOS will say it can't verify the developer. Either **right-click the app → Open → Open**, or run this once:
-
-```bash
-xattr -d com.apple.quarantine /Applications/HeadOrbit.app
-```
-
-### Option 2: build from source
-
-```bash
-brew install xcodegen          # once
-git clone https://github.com/Cogria-AI/HeadOrbit.git
-cd HeadOrbit
+```sh
+git clone https://github.com/tuotuogao/NotLooking.git
+cd NotLooking
+brew install xcodegen
 ./build.sh
-open build/Build/Products/Debug/HeadOrbit.app
+open build/Build/Products/Debug/NotLooking.app
 ```
 
-Xcode 15 or later is required.
+动作逻辑与首次测试状态验证：
 
-### Permissions
+```sh
+bash Tests/run-motion.sh
+```
 
-- **Motion & Fitness** is asked on first launch. Blur and posture reminders need nothing else.
-- **Accessibility** is only needed when a scene presses keys. macOS asks the first time a key gesture fires. Allow HeadOrbit in System Settings → Privacy & Security → Accessibility.
+生成发布安装包：
 
-HeadOrbit lives in the menu bar only, so there is no Dock icon.
+```sh
+./package.sh
+```
 
-## Usage
+输出 `dist/NotLooking-v1.0.0.dmg`。构建失败会返回失败状态，不会继续包装旧版本。发布 `v*` 标签会触发 GitHub Actions 构建并附加 DMG。
 
-1. Put on your AirPods and make sure they're connected to the Mac.
-2. Click the HeadOrbit icon in the menu bar. The header should read **Tracking (left)** or **Tracking (right)**.
-3. Sit straight, look at the screen, and click **Set current pose as forward**. Every angle is measured from this pose.
-4. Open **Settings…** (`⌘,`) to turn scenes on and tune them.
+应用使用独立的偏好设置，不会自动导入 HeadOrbit 的权限和设置。以不同临时签名重新构建时，macOS 可能重新要求授权。
 
-<p align="center">
-  <img src="docs/panel.png" alt="HeadOrbit menu" width="300">
-</p>
+## 来源与许可证
 
-The panel shows turn, nod and tilt live. Right turn, head up and right tilt are positive. A dot turns orange while a gesture is active.
+本项目基于 [Cogria-AI/HeadOrbit](https://github.com/Cogria-AI/HeadOrbit) v2.1.0，保留原作者版权、MIT 许可证和提交历史。NotLooking 的首次使用引导、窗口入口、登录启动设置及品牌调整由 tuotuogao 维护。
 
-## Settings window
-
-- **Scenes.** Each scene page has a switch and three sections: turn, nod, tilt. Each section has a live gauge with orange marks at the trigger angles, then one row per direction: pick an action, then set its angle, how long to hold before it fires, and the key or dimming.
-- **Calibration.** Recalibrate forward, and turn on automatic forward adjustment.
-- **General.** Language (English, 中文, 日本語), appearance, headphone status and both permissions.
-- **About.** Version, update check, [headorbit.com](https://headorbit.com) and a link to the author.
-
-### Automatic forward adjustment
-
-Off by default. Calibrate manually first. When nothing is triggered and your head stays within half of each trigger angle for 8 seconds, HeadOrbit shifts "forward" by up to 0.5° per second. The total shift in each direction is capped at 50% of that direction's trigger angle from your manual calibration. Posture reminders always use the manual reference, so slouching never becomes the new normal. Recalibrate after moving your chair.
-
-## Troubleshooting
-
-**"No head-tracking headphones"** while wearing AirPods
-- Check they're connected to the Mac, not your iPhone (Control Center → Sound). Sound playing through the AirPods is not enough; if it still fails, click the AirPods in the Bluetooth menu to connect them to this Mac.
-- Take them out and put them back in. Motion data only streams while they're worn.
-- Make sure the model supports head tracking (see Requirements).
-
-**A key gesture shows the Accessibility prompt again after an update**
-- The release build is not signed with a fixed developer identity, so macOS treats each new version as a new app. In System Settings → Privacy & Security → Accessibility, remove HeadOrbit with **−** and add it again. Unticking and ticking is not enough.
-
-**My Bluetooth mouse lags while HeadOrbit is running**
-- Head tracking keeps a constant Bluetooth stream from the AirPods. Some third-party Bluetooth LE mice can't adjust to it and stutter; macOS logs them as "Incompatible LE HID". Apple mice and trackpads, wired mice, or mice with a 2.4 GHz receiver are not affected.
-
-**Motion & Fitness access denied**
-- System Settings → Privacy & Security → Motion & Fitness → enable HeadOrbit.
-
-**The blur looks like a flat dark sheet instead of blur**
-- HeadOrbit uses a WindowServer blur that Apple doesn't document. If a future macOS removes it, the overlay falls back to plain dimming.
-
-## Ideas for later
-
-- Look down at your phone → pause media
-- Away from the screen for a while → lock
-- Turn your head toward another display → move focus there
-- Run a Shortcut from a gesture
-
-If you build any of these, a pull request is very welcome.
-
-## License
-
-[MIT](LICENSE) © 2026 [Cogria-AI](https://github.com/Cogria-AI)
-
-Made by [@rfboen](https://x.com/rfboen).
+原始说明保存在 [docs/upstream](docs/upstream/README.md)。[LICENSE](LICENSE) 中的原版权声明保持不变。
