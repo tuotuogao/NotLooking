@@ -19,7 +19,7 @@
 
 ## 使用
 
-需要 macOS 14 或更新版本，以及支持头部追踪的 AirPods / Beats，例如 AirPods Pro、AirPods 3 / 4、AirPods Max。耳机必须连接到这台 Mac，而不是切到手机。
+需要 macOS 14 或更新版本，以及支持头部追踪的 AirPods / Beats，例如 AirPods Pro、AirPods 3 / 4、AirPods Max。发布安装包同时包含 Apple Silicon 和 Intel 版本。耳机必须连接到这台 Mac，而不是切到手机。
 
 1. 从 [Releases](https://github.com/tuotuogao/NotLooking/releases) 下载 DMG，把 NotLooking 拖入“应用程序”。
 2. 打开“没在看”，按照窗口中的四步引导操作。
@@ -67,7 +67,7 @@ bash Tests/run-motion.sh
 ./package.sh
 ```
 
-输出 `dist/NotLooking-v1.0.0.dmg`。构建失败会返回失败状态，不会继续包装旧版本。发布 `v*` 标签会触发 GitHub Actions 构建并附加 DMG。
+输出 `dist/NotLooking-v1.0.0.dmg`。构建失败会返回失败状态，不会继续包装旧版本。启用本 Fork 的 GitHub Actions 后，发布 `v*` 标签会触发构建、测试，并附加 DMG 与校验值。
 
 应用使用独立的偏好设置，不会自动导入 HeadOrbit 的权限和设置。以不同临时签名重新构建时，macOS 可能重新要求授权。
 

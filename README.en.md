@@ -19,7 +19,7 @@ A native macOS menu bar app that reads AirPods head motion, blurs your screen wh
 
 ## Quick start
 
-Requires macOS 14+ and compatible head-tracking AirPods / Beats connected to this Mac. Download the DMG from Releases, move NotLooking into Applications, then follow the four-step guide.
+Requires macOS 14+ and compatible head-tracking AirPods / Beats connected to this Mac. Release packages are universal (Apple Silicon and Intel). Download the DMG from Releases, move NotLooking into Applications, then follow the four-step guide.
 
 Defaults: turn left or right past **35° for 0.6 seconds** to blur; look back to clear. Tune each direction in Privacy blur. Headphone data stays local. Only Motion & Fitness is needed for blur; Accessibility is optional for simulated key actions. No camera, microphone, or screen recording permission is required.
 
@@ -35,9 +35,11 @@ bash Tests/run-motion.sh
 ./package.sh
 ```
 
-Build: `build/Build/Products/Debug/NotLooking.app`. Package: `dist/NotLooking-v1.0.0.dmg`. Pushing a `v*` tag triggers the release workflow. Rebuild the native vector icon with `bash scripts/make-icon.sh`.
+Build: `build/Build/Products/Debug/NotLooking.app`. Package: `dist/NotLooking-v1.0.0.dmg`. Enable Actions on the fork before pushing a `v*` tag to use the release workflow. Rebuild the native vector icon with `bash scripts/make-icon.sh`.
 
 NotLooking has its own preferences and permissions; HeadOrbit settings are not automatically imported.
+
+After restarting, look at the screen and calibrate again before protection starts. A manual launch opens Calibration; a login launch stays in the menu bar with a calibration prompt.
 
 ## Credits
 

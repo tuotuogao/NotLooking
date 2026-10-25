@@ -4,7 +4,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 xcodegen generate
 xcodebuild -project NotLooking.xcodeproj -scheme NotLooking -configuration Release \
-  -derivedDataPath build CODE_SIGN_IDENTITY=- build 2>&1 | tee build.log | grep -E "error:|warning:|BUILD"
+  -derivedDataPath build CODE_SIGN_IDENTITY=- ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO build 2>&1 | tee build.log | grep -E "error:|warning:|BUILD"
 APP=build/Build/Products/Release/NotLooking.app
 VERSION=$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' "$APP/Contents/Info.plist")
 STAGE=build/dmg
